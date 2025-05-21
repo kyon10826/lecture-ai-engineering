@@ -1,4 +1,3 @@
-
 import os
 import pytest
 import pandas as pd
@@ -52,10 +51,16 @@ def test_compare_with_baseline(test_data):
         baseline_pred = baseline_model.predict(X_test)
         baseline_accuracy = accuracy_score(y_test, baseline_pred)
 
-        assert current_accuracy >= baseline_accuracy * 0.95, f"モデルの精度が大幅に低下しています。現在: {current_accuracy}, ベースライン: {baseline_accuracy}"
-        print(f"精度比較 - 現在: {current_accuracy:.4f}, ベースライン: {baseline_accuracy:.4f}")
+        assert (
+            current_accuracy >= baseline_accuracy * 0.95
+        ), f"モデルの精度が大幅に低下しています。現在: {current_accuracy}, ベースライン: {baseline_accuracy}"
+        print(
+            f"精度比較 - 現在: {current_accuracy:.4f}, ベースライン: {baseline_accuracy:.4f}"
+        )
     else:
-        print(f"ベースラインモデルが存在しないため、現在のモデル（精度: {current_accuracy:.4f}）をベースラインとして保存します")
+        print(
+            f"ベースラインモデルが存在しないため、現在のモデル（精度: {current_accuracy:.4f}）をベースラインとして保存します"
+        )
         with open(BASELINE_MODEL_PATH, "wb") as f:
             pickle.dump(current_model, f)
 
@@ -78,4 +83,5 @@ def test_prediction_consistency(test_data):
 
 if __name__ == "__main__":
     import pytest
+
     pytest.main(["-xvs", __file__])
